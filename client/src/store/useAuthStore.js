@@ -86,7 +86,7 @@ export const useAuthStore = create((set, get) =>({
         console.log("Connecting to websocket ..............");
         
 
-        const socket = io("http://localhost:5000", {
+        const socket = io("https://chat-app-7wb6.onrender.com", {
             query: {
                 userId: authUser._id,
                 reconnection: true,  
