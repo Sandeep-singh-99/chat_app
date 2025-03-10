@@ -6,6 +6,8 @@ import cors from 'cors';
 dotenv.config();
 import authRouter from './routes/auth.routes.js';
 import messageRouter from './routes/message.routes.js';
+import groupMessageRouter from './routes/groupMessage.routes.js'
+import group from './routes/group.routes.js'
 import { app, server } from './lib/socket.js';
 
 import path from 'path';
@@ -28,6 +30,8 @@ app.use(cors({
 
 app.use("/api/auth", authRouter);
 app.use("/api/messages", messageRouter);
+app.use("/api/group-messages", groupMessageRouter)
+app.use("/api/group", group)
 
 // if (process.env.NODE_ENV === 'production') {
 //     app.use(express.static(path.join( _dirname, '../client/build')))
