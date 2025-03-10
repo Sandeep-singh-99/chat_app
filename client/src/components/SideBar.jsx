@@ -3,6 +3,7 @@ import { Users, Search } from "lucide-react";
 import { useChatStore } from "../store/useChatStore";
 import { useAuthStore } from "../store/useAuthStore";
 import SlideBarSkeleton from "./SlideBarSkeleton";
+import { ImageModal } from "./ImageModal";
 
 export default function SideBar() {
   const { users, selectedUser, isUsersLoading, getUsers, setSelectedUser } =
@@ -11,6 +12,7 @@ export default function SideBar() {
 
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     getUsers();
@@ -89,6 +91,7 @@ export default function SideBar() {
                   src={user.profilePic || "/avatar.png"}
                   alt={user.name}
                   className="size-12 object-cover rounded-full"
+                  onClick={() => setSelectedImage(user.profilePic)}
                 />
                 {onlineUsers.includes(user._id) && (
                   <span className="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-zinc-900" />
@@ -108,6 +111,11 @@ export default function SideBar() {
           <div className="text-center text-zinc-500 py-4">No users found</div>
         )}
       </div>
+      <ImageModal
+        imageUrl={selectedImage}
+        isOpen={!!selectedImage}
+        onClose={() => setSelectedImage(null)}
+      />
     </aside>
   );
 }

@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { X } from 'lucide-react'
 import { useChatStore } from '../store/useChatStore'
 import { useAuthStore } from '../store/useAuthStore'
+import { ImageModal } from './ImageModal'
 
 export default function ChatHeader() {
     const { selectedUser, setSelectedUser } = useChatStore()
     const { onlineUsers } = useAuthStore()
+
+    const [selectedImage, setSelectedImage] = useState(null)
   return (
     <div className="p-2.5 border-b border-base-300">
     <div className="flex items-center justify-between">
@@ -13,7 +16,7 @@ export default function ChatHeader() {
         {/* Avatar */}
         <div className="avatar">
           <div className="size-10 rounded-full relative">
-            <img src={selectedUser.profilePic || "/avatar.png"} alt={selectedUser.fullName} />
+            <img src={selectedUser.profilePic || "/avatar.png"} alt={selectedUser.fullName} onClick={() => setSelectedImage(selectedUser.profilePic)} />
           </div>
         </div>
 
@@ -31,6 +34,11 @@ export default function ChatHeader() {
         <X />
       </button>
     </div>
+    <ImageModal
+    imageUrl={selectedImage}
+    isOpen={!!selectedImage}
+    onClose={() => setSelectedImage(null)}
+    />
   </div>
   )
 }
